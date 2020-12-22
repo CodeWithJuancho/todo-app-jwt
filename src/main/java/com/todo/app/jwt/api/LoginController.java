@@ -15,6 +15,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import static com.todo.app.jwt.util.SecurityConstants.EXPIRATION_TIME;
+import static com.todo.app.jwt.util.SecurityConstants.TOKEN_PREFIX;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
@@ -47,8 +49,8 @@ public class LoginController {
             return Response.status(BAD_REQUEST).entity("Wrong password").build();
         }
 
-        String token = TokenUtils.generateUserToken(user, 6000L, issuer);
-        String bearerToken = String.format("Bearer %s", token);
+        String token = TokenUtils.generateUserToken(user, EXPIRATION_TIME, issuer);
+        String bearerToken = String.format("%s %s", TOKEN_PREFIX, token);
 
         return Response.ok().entity(bearerToken).build();
     }
