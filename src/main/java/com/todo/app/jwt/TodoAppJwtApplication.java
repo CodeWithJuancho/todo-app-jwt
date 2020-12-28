@@ -4,7 +4,7 @@ import com.todo.app.jwt.model.Role;
 import com.todo.app.jwt.model.User;
 import com.todo.app.jwt.repository.RoleRepository;
 import com.todo.app.jwt.repository.UserRepository;
-import com.todo.app.jwt.util.PasswordEncoder;
+import com.todo.app.jwt.util.PasswordUtils;
 import io.quarkus.runtime.StartupEvent;
 
 import javax.enterprise.event.Observes;
@@ -24,7 +24,7 @@ public class TodoAppJwtApplication extends Application {
     UserRepository userRepository;
 
     @Inject
-    PasswordEncoder passwordEncoder;
+    PasswordUtils passwordUtils;
 
     public void onStart(@Observes StartupEvent ev) {
         if (roleRepository.count() == 0) {
@@ -38,7 +38,7 @@ public class TodoAppJwtApplication extends Application {
 
             admin.setUserName("admin");
             admin.setEmail("admin@admin.com");
-            admin.setPassword(passwordEncoder.encode("admin"));
+            admin.setPassword(passwordUtils.encode("admin"));
 
             admin.setRoles(roleRepository.findAll());
             userRepository.save(admin);
@@ -47,7 +47,7 @@ public class TodoAppJwtApplication extends Application {
 
             user.setUserName("user");
             user.setEmail("user@user.com");
-            user.setPassword(passwordEncoder.encode("user"));
+            user.setPassword(passwordUtils.encode("user"));
 
             // Only User role
             List<Role> userRoles = new ArrayList<>();
@@ -61,7 +61,7 @@ public class TodoAppJwtApplication extends Application {
 
             customer.setUserName("customer");
             customer.setEmail("customer@customer.com");
-            customer.setPassword(passwordEncoder.encode("customer"));
+            customer.setPassword(passwordUtils.encode("customer"));
 
             // Only User role
             List<Role> customerRoles = new ArrayList<>();

@@ -3,7 +3,7 @@ package com.todo.app.jwt.api;
 
 import com.todo.app.jwt.model.User;
 import com.todo.app.jwt.repository.UserRepository;
-import com.todo.app.jwt.util.PasswordEncoder;
+import com.todo.app.jwt.util.PasswordUtils;
 import com.todo.app.jwt.util.TokenUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -32,7 +32,7 @@ public class LoginController {
     UserRepository userRepository;
 
     @Inject
-    PasswordEncoder passwordEncoder;
+    PasswordUtils passwordUtils;
 
     @POST
     @Path("/users/token")
@@ -45,7 +45,7 @@ public class LoginController {
             return Response.status(BAD_REQUEST).entity("Username does not exists").build();
         }
 
-        if (!user.getPassword().equals(passwordEncoder.encode(loginUserRequest.getPassword()))) {
+        if (!user.getPassword().equals(passwordUtils.encode(loginUserRequest.getPassword()))) {
             return Response.status(BAD_REQUEST).entity("Wrong password").build();
         }
 
