@@ -5,16 +5,68 @@
       <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
     </q-btn>
 
-    <div class="main-page-container">
-      <h5>SignUp</h5>
+    <div class="sign-up">
+      <q-form @submit="createUser" class="q-gutter-md">
+
+        <q-input v-model="userName"
+                 label="Username"
+                 :rules="[val => !!val || 'Username must be full filled']"
+                 bg-color="lightgrey"
+                 filled
+        />
+
+        <q-input v-model="email"
+                 label="Email"
+                 :rules="[val => !!val || 'Email must be full filled']"
+                 bg-color="lightgrey"
+                 filled
+        />
+
+        <q-input v-model="password"
+                 :type="isPasswordHidden ? 'password':'text'"
+                 label="Password"
+                 :rules="[val => !!val || 'Password must be full filled']"
+                 bg-color="lightgrey"
+                 filled
+        >
+          <template v-slot:append>
+            <q-icon @click="isPasswordHidden = !isPasswordHidden"
+                    :name="isPasswordHidden ? 'visibility_off':'visibility'"
+            />
+          </template>
+        </q-input>
+
+        <q-btn label="Create Account"
+               type="submit"
+               class="sign-up-btn"
+               color="primary"
+        />
+      </q-form>
     </div>
+
 
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SignUp'
+
+  name: 'SignUp',
+
+  data() {
+    return {
+      userName: null,
+      email: null,
+      password: null,
+      isPasswordHidden: true
+    }
+  },
+
+  methods: {
+    createUser() {
+      console.log('Hello this will be where the user creates its account')
+    }
+  }
 }
 </script>
 
@@ -33,8 +85,16 @@ export default {
   margin: 30px auto;
 }
 
-.button-container {
+.sign-up {
+  max-width: 400px;
   text-align: center;
-  margin: 20px auto;
+  color: white;
+  padding: 30px;
+  margin: 30px auto;
+}
+
+.sign-up-btn {
+  width: 90%;
+  height: 45px;
 }
 </style>
