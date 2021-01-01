@@ -1,43 +1,9 @@
-#Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-release.properties
+jwt-example.iml
+jwt-example.tar.gz
 
-# Eclipse
-.project
-.classpath
-.settings/
-bin/
+frontend/frontend.iml
+frontend/target/
 
-# IntelliJ
-.idea
-*.ipr
-*.iml
-*.iws
+.idea/
 
-# Files
-src/main/resources/data
-*.db
-
-# NetBeans
-nb-configuration.xml
-
-# Visual Studio Code
-.vscode
-.factorypath
-
-# OSX
-.DS_Store
-
-# Vim
-*.swp
-*.swo
-
-# patch
-*.orig
-*.rej
-
-# Local environment
-.env
+lsp
