@@ -5,16 +5,60 @@
       <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
     </q-btn>
 
-    <div class="main-page-container">
-      <h5>Login</h5>
+    <div class="login">
+      <q-form @submit="login" class="q-gutter-md">
+
+        <q-input v-model="userName"
+                 label="Username"
+                 :rules="[val => !!val || 'Username must be full filled']"
+                 bg-color="lightgrey"
+                 filled
+        />
+
+        <q-input v-model="password"
+                 :type="isPasswordHidden ? 'password':'text'"
+                 label="Password"
+                 :rules="[val => !!val || 'Password must be full filled']"
+                 bg-color="lightgrey"
+                 filled
+        >
+          <template v-slot:append>
+            <q-icon @click="isPasswordHidden = !isPasswordHidden"
+                    :name="isPasswordHidden ? 'visibility_off':'visibility'"
+            />
+          </template>
+        </q-input>
+
+        <q-btn label="Login"
+               type="submit"
+               class="login-btn"
+               color="primary"
+        />
+      </q-form>
     </div>
+
 
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Login'
+
+  name: 'Login',
+
+  data() {
+    return {
+      userName: null,
+      password: null,
+      isPasswordHidden: true
+    }
+  },
+
+  methods: {
+    login() {
+      console.log('Hello this will be the login')
+    }
+  }
 }
 </script>
 
@@ -33,8 +77,16 @@ export default {
   margin: 30px auto;
 }
 
-.button-container {
+.login {
+  max-width: 400px;
   text-align: center;
-  margin: 20px auto;
+  color: white;
+  padding: 30px;
+  margin: 30px auto;
+}
+
+.login-btn {
+  width: 90%;
+  height: 45px;
 }
 </style>
