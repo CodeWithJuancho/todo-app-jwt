@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import Auth from '../service/Auth'
+
 export default {
 
   name: 'Login',
@@ -56,7 +58,15 @@ export default {
 
   methods: {
     login() {
-      console.log('Hello this will be the login')
+      Auth.login(this.userName, this.password,
+        (isLoggedIn) => {
+          if (isLoggedIn) {
+            console.log('Hello you are logged in, we will redirect you')
+          }
+        },
+        (err) => {
+          console.log(err.data)
+        })
     }
   }
 }

@@ -46,7 +46,7 @@ public class LoginController {
         }
 
         if (!user.getPassword().equals(passwordUtils.encode(loginUserRequest.getPassword()))) {
-            return Response.status(BAD_REQUEST).entity("Wrong password").build();
+            return Response.status(BAD_REQUEST).entity("The password typed is incorrect").build();
         }
 
         String token = TokenUtils.generateUserToken(user, EXPIRATION_TIME, issuer);
