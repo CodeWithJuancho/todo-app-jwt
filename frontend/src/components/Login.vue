@@ -60,8 +60,16 @@ export default {
     login() {
       Auth.login(this.userName, this.password,
         (isLoggedIn) => {
-          if (isLoggedIn) {
-            console.log('Hello you are logged in, we will redirect you')
+          switch (isLoggedIn) {
+            case Auth.accessLevelAdmin():
+              console.log('Hello you are logged in with ADMIN role')
+              break
+            case Auth.accessLevelUser():
+              console.log('Hello you are logged in with USER role')
+              break
+            case Auth.accessLevelCustomer():
+              console.log('Hello you are logged in with CUSTOMER role')
+              break
           }
         },
         (err) => {
