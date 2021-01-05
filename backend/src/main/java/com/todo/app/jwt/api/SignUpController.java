@@ -61,7 +61,7 @@ public class SignUpController {
 
         user.setUserName(signUpUserRequest.getUserName());
         user.setEmail(signUpUserRequest.getEmail());
-        user.setPassword(passwordUtils.encode(signUpUserRequest.getUserName()));
+        user.setPassword(passwordUtils.encode(signUpUserRequest.getPassword()));
 
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.findByName(USER));
