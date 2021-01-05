@@ -62,7 +62,7 @@ export default {
         (isLoggedIn) => {
           switch (isLoggedIn) {
             case Auth.accessLevelAdmin():
-              console.log('Hello you are logged in with ADMIN role')
+              this.$router.push({ name: 'admin' })
               break
             case Auth.accessLevelUser():
               console.log('Hello you are logged in with USER role')
