@@ -17,6 +17,18 @@ export default {
       }, (err) => {
         failure(err.response)
       })
-  }
+  },
 
+  createAccount(userName, email, password, success, failure) {
+    return AXIOS.post('sign-up/user', {
+      userName: userName,
+      email: email,
+      password: password
+    })
+      .then(() => {
+        success(true)
+      }, (err) => {
+        failure(err.response)
+      })
+  }
 }

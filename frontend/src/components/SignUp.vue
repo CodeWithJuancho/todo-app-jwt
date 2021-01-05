@@ -87,6 +87,8 @@
 </template>
 
 <script>
+import Api from '../service/Api'
+
 export default {
 
   name: 'SignUp',
@@ -154,7 +156,19 @@ export default {
   methods: {
 
     createUser() {
-      console.log('Hello this will be where the user creates its account')
+      Api.createAccount(this.userName, this.email, this.password,
+        () => {
+          alert('Account has been created successfully, you will be redirect to login')
+          setTimeout(() => {
+            this.$router.push({ name: 'login' })
+          }, 2500)
+        },
+        (err) => {
+          alert(err.data)
+          if (err.data === 'Password not valid') {
+            this.validPasswordInfo = true
+          }
+        })
     },
 
     getClassList(elementId) {
