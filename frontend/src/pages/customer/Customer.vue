@@ -7,6 +7,14 @@
         <h2>{{user}}</h2>
         <h5>Welcome to our Todo App Customer Page</h5>
       </div>
+
+      <div class="button-container q-pa-md q-gutter-md">
+        <q-btn @click="logOut"
+               label="Logout"
+               icon="exit_to_app"
+               size="md"
+        />
+      </div>
     </div>
 
   </div>
@@ -24,6 +32,13 @@ export default {
     }
   },
 
+  methods: {
+    logOut() {
+      localStorage.removeItem('token')
+      this.$router.push({ name: 'login' })
+    }
+  },
+
   mounted() {
     this.user = Auth.getUser() ? Auth.getUser().userName.toUpperCase() : 'No user connected'
   }
@@ -37,4 +52,8 @@ export default {
   position: absolute;
 }
 
+.button-container {
+  text-align: center;
+  margin: 20px auto;
+}
 </style>
