@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import routes from './routes'
+import Auth from 'src/service/Auth'
 
 Vue.use(VueRouter)
 
@@ -15,7 +16,7 @@ Vue.use(VueRouter)
  */
 
 export default function (/* { store, ssrContext } */) {
-  const Router = new VueRouter({
+  const router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
 
@@ -26,5 +27,17 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
-  return Router
+  router.beforeEach(((to, from, next) => {
+    if (to.meta.requiresAuth) {
+      if (Auth.isLoggedIn()) {
+        next()
+      } else {
+        next({ name: 'login' })
+      }
+    } else {
+      next()
+    }
+  }))
+
+  return router
 }
