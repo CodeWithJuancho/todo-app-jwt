@@ -16,6 +16,21 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('pages/admin/Admin.vue')
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: () => import('pages/user/User.vue')
+  },
+  {
+    path: '/customer',
+    name: 'customer',
+    component: () => import('pages/customer/Customer.vue')
+  },
 
   // Always leave this as last one,
   // but you can also remove it
