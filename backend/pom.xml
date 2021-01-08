@@ -1,10 +1,18 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.todo_app_jwt</groupId>
-  <artifactId>code-with-quarkus</artifactId>
+
+  <parent>
+    <groupId>com.todo_app_jwt</groupId>
+    <artifactId>jwt-example</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>backend</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+
   <properties>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
     <maven.compiler.target>11</maven.compiler.target>
@@ -116,42 +124,29 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+      <!--   Plugin for copying Front End built dist/spa folder over the back end META-INF/resources   -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>Copy Vue.js frontend content</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>src/main/resources/META-INF/resources</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.parent.basedir}/frontend/dist/spa</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-      <id>native</id>
-      <activation>
-        <property>
-          <name>native</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <version>${surefire-plugin.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>integration-test</goal>
-                  <goal>verify</goal>
-                </goals>
-                <configuration>
-                  <systemPropertyVariables>
-                    <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-                    <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                    <maven.home>${maven.home}</maven.home>
-                  </systemPropertyVariables>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-      <properties>
-        <quarkus.package.type>native</quarkus.package.type>
-      </properties>
-    </profile>
-  </profiles>
 </project>
