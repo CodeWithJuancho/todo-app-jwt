@@ -1,7 +1,6 @@
 package com.todo.app.jwt.api;
 
 
-import com.todo.app.jwt.model.Role;
 import com.todo.app.jwt.model.User;
 import com.todo.app.jwt.repository.RoleRepository;
 import com.todo.app.jwt.repository.UserRepository;
@@ -15,9 +14,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import static com.todo.app.jwt.model.Role.USER;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -62,10 +59,7 @@ public class SignUpController {
         user.setUserName(signUpUserRequest.getUserName());
         user.setEmail(signUpUserRequest.getEmail());
         user.setPassword(passwordUtils.encode(signUpUserRequest.getPassword()));
-
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.findByName(USER));
-        user.setRoles(roles);
+        user.setRoles(Collections.singletonList(roleRepository.findByName(USER)));
 
         userRepository.save(user);
 
